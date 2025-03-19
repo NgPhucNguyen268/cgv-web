@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import ShowDetail from "../pages/Home/show";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import Confirmation from "../pages/Confirmation";
 import TicketBooking from "../component/TicketBooking";
 
 // Import Dashboard và Layout
@@ -34,6 +35,7 @@ const App = () => {
     const newUser = { id: users.length + 1, ...user };
     setUsers([...users, newUser]);
   };
+
   return (
     <Router>
       <Routes>
@@ -78,8 +80,10 @@ const App = () => {
             </>
           }
         />
+
+        {/* Sửa lỗi: Thêm route động cho ticket-booking */}
         <Route
-          path="/ticket"
+          path="/ticket-booking/:id"
           element={
             <>
               <Navbar />
@@ -88,22 +92,31 @@ const App = () => {
             </>
           }
         />
+        <Route
+          path="/confirmation"
+          element={
+            <>
+              <Navbar />
+              <Confirmation />
+              <Footer />
+            </>
+          }
+        />
 
-        {/* Layout riêng cho Dashboard (Không có Navbar & Footer) */}
+        {/* Layout riêng cho Dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="movies" element={<ManageMovies />} />
-          {/* <Route path="users" element={<ManageUsers />} /> */}
           <Route path="users" element={<ManageUsers users={users} />} />
           <Route path="tickets" element={<ManageTickets />} />
           <Route path="showtimes" element={<ManageShowtimes />} />
           <Route path="statistics" element={<Statistics />} />
           <Route path="settings" element={<Settings />} />
-          //create
+
+          {/* Routes Create */}
           <Route path="createMovies" element={<CreateMovies />} />
           <Route path="createShows" element={<CreateShowtimes />} />
           <Route path="createTickets" element={<CreateTickets />} />
-          {/* <Route path="createUser" element={<CreateUsers />} /> */}
           <Route
             path="createUser"
             element={<CreateUsers onAddUser={addUser} />}

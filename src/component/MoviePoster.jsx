@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PlayCircle, Ticket } from "lucide-react"; // Import icon
+import { PlayCircle } from "lucide-react"; // Import icon
 import YouTube from "react-youtube";
 
 const MoviePoster = ({ movies }) => {
@@ -50,8 +50,8 @@ const MoviePoster = ({ movies }) => {
                   XEM CHI TIẾT
                 </button>
               </Link>
-              <Link to={`/purchase/${movie.id}`}>
-                <button className="flex items-center gap-1 bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition">
+              <Link to={`/ticket-booking/${movie.id}`}>
+                <button className="flex items-center gap-1 bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition">
                   MUA VÉ
                 </button>
               </Link>
