@@ -17,14 +17,14 @@ const MoviePoster = ({ movies }) => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {movies?.results.map((movie) => (
           <div
             key={movie.id}
-            className="group bg-gray-900 p-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            className="flex flex-col group bg-gray-900 p-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
             {/* Poster + Play Button */}
-            <div className="relative w-60 h-96 overflow-hidden rounded-lg cursor-pointer">
+            <div className="relative w-full h-full overflow-hidden rounded-lg cursor-pointer">
               <img
                 className="w-full h-full object-cover rounded-lg"
                 src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
