@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import useFetch from "../../Utilities/Fetch";
+import { PlayCircle, Ticket } from "lucide-react";
 
 const ShowDetail = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const ShowDetail = () => {
     loading,
     error,
   } = useFetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=vi-VN`
   );
 
   // Lấy danh sách video của phim
@@ -20,7 +21,7 @@ const ShowDetail = () => {
     `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
   );
 
-  // State để mở modal
+  // State để mở modal trailer
   const [isOpen, setIsOpen] = useState(false);
 
   if (loading) return <p className="text-center text-gray-400">Loading...</p>;
@@ -35,51 +36,65 @@ const ShowDetail = () => {
   );
 
   return (
-    <div>
-      {/* Ảnh nền */}
-      <div className="w-full">
-        <div className="absolute w-full h-[70vh] bg-gradient-to-t from-black-blur"></div>
-        <img
-          src={`https://image.tmdb.org/t/p/original${
-            movie.backdrop_path || movie.poster_path
-          }`}
-          alt=""
-          className="w-full h-[70vh] object-cover"
-        />
-      </div>
+    <div className="max-w-6xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold border-b-2 border-gray-300 pb-2">
+        Nội Dung Phim
+      </h2>
 
-      {/* Nội dung phim */}
-      <div className="flex justify-center">
-        <div className="flex flex-col items-center md:flex-row md:max-w-2xl lg:max-w-3xl absolute xl:max-w-4xl md:mt-[-300px] mt-[-200px] text-white">
-          <div className="lg:w-[30%] h-auto md:h-[400px] w-[70%]">
-            <img
-              className="w-[100%] h-full md:h-auto object-cover rounded-md"
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt=""
-            />
-          </div>
-          <div className="float-left w-[70%] md:pl-12">
-            <p className="text-3xl md:text-5xl mb-3 mt-3 md:mt-0">
-              {movie.title || movie.original_title}
-            </p>
-            <p className="text-gray-300 mb-8">{movie.overview}</p>
+      {/* Thông tin phim */}
+      <div className="flex flex-col md:flex-row mt-4">
+        {/* Poster phim */}
+        <div className="md:w-1/4 w-full flex justify-center">
+          <img
+            className="w-full md:w-[250px] h-auto rounded-md shadow-md"
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+          />
+        </div>
 
-            {/* Nút mở modal */}
+        {/* Thông tin phim */}
+        <div className="md:w-3/4 w-full md:pl-6 mt-4 md:mt-0">
+          <h3 className="text-2xl font-bold">{movie.title}</h3>
+          <p className="text-gray-600 text-sm mt-2">
+            <span className="font-bold">Đạo diễn:</span> Đang cập nhật
+          </p>
+          <p className="text-gray-600 text-sm">
+            <span className="font-bold">Thể loại:</span> Đang cập nhật
+          </p>
+          <p className="text-gray-600 text-sm">
+            <span className="font-bold">Khởi chiếu:</span> {movie.release_date}
+          </p>
+          <p className="text-gray-600 text-sm">
+            <span className="font-bold">Thời lượng:</span> {movie.runtime} phút
+          </p>
+          <p className="text-gray-600 text-sm">
+            <span className="font-bold">Ngôn ngữ:</span>{" "}
+            {movie.original_language.toUpperCase()}
+          </p>
+
+          <div className="flex gap-2 mt-4">
+            <button className="bg-red-600 text-white flex items-center px-4 py-2 rounded-md font-bold hover:bg-red-700">
+              <Ticket className="mr-2" size={18} /> MUA VÉ
+            </button>
+
             {trailer && (
               <button
                 onClick={() => setIsOpen(true)}
-                className="bg-red-600 px-4 py-2 text-white rounded-md hover:bg-red-700"
+                className="bg-gray-800 text-white flex items-center px-4 py-2 rounded-md font-bold hover:bg-gray-900"
               >
-                Watch Trailer
+                <PlayCircle className="mr-2" size={18} /> Trailer
               </button>
             )}
           </div>
         </div>
       </div>
 
+      {/* Nội dung mô tả phim */}
+      <p className="mt-6 text-gray-700">{movie.overview}</p>
+
       {/* Modal Trailer */}
       {isOpen && trailer && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
           <div className="bg-black p-4 rounded-lg relative max-w-3xl w-full">
             {/* Nút đóng modal */}
             <button

@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 w-full bg-[#FDF7E5] text-black text-sm py-6 border-t border-black">
+    <footer className="relative bottom-0 left-0 w-full bg-[#FDF7E5] text-black text-sm py-6 border-t border-black">
       <div className="container mx-auto px-4">
         {/* Logo và danh sách dịch vụ */}
         <div className="text-center text-gray-700 space-x-4 mb-4 text-xs">

@@ -12,72 +12,29 @@ import hinh7 from "../../assets/hinh7.jpg";
 
 const Banner = () => {
   return (
-    <div className="flex justify-center mt-6 mb-6">
-      <Swiper
-        navigation={true}
-        modules={[Navigation, Autoplay]}
-        className="mySwiper"
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        loop={true}
-        slidesPerView={1}
-        spaceBetween={0}
-        style={{ height: "500px" }} // Chiều cao cố định
-      >
-        <SwiperSlide>
+    <Swiper
+      navigation={true}
+      modules={[Navigation, Autoplay]}
+      className="mySwiper"
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      loop={true}
+      slidesPerView={1}
+      spaceBetween={0}
+      style={{ height: "500px" }}
+    >
+      {[hinh1, hinh2, hinh3, hinh4, hinh5, hinh6, hinh7].map((hinh, index) => (
+        <SwiperSlide key={index}>
           <img
-            src={hinh1}
-            alt="img"
-            className="object-cover w-full h-[500px]" // Chiều cao cố định cho hình ảnh
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={hinh2}
-            alt="img"
-            className="object-cover w-full h-[500px]" // Chiều cao cố định cho hình ảnh
-          />
-        </SwiperSlide>
-        {/* Thêm các SwiperSlide khác với hình ảnh và chiều cao tương tự */}
-        <SwiperSlide>
-          <img
-            src={hinh3}
-            alt="img"
+            src={hinh}
+            alt={`slide-${index}`}
             className="object-cover w-full h-[500px]"
           />
         </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={hinh4}
-            alt="img"
-            className="object-cover w-full h-[500px]"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={hinh5}
-            alt="img"
-            className="object-cover w-full h-[500px]"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={hinh6}
-            alt="img"
-            className="object-cover w-full h-[500px]"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={hinh7}
-            alt="img"
-            className="object-cover w-full h-[500px]"
-          />
-        </SwiperSlide>
-      </Swiper>
-    </div>
+      ))}
+    </Swiper>
   );
 };
 
