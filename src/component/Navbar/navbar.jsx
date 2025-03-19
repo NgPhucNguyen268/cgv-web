@@ -67,24 +67,24 @@ function Navbar() {
 
       {/* Nút đăng nhập, đăng ký, mua vé */}
       <div className="flex items-center space-x-4">
-        <button
+        <input
+          type="submit"
+          value="Đăng Nhập"
           onClick={() => navigate("/login")}
-          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
-        >
-          Đăng Nhập
-        </button>
-        <button
+          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition cursor-pointer"
+        />
+        <input
+          type="submit"
+          value="Đăng Ký"
           onClick={() => navigate("/register")}
-          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
-        >
-          Đăng Ký
-        </button>
-        <button
-          onClick={() => alert("Chức năng Mua Vé chưa có!")}
-          className="bg-red-600 text-white px-4 py-3 rounded hover:bg-red-700 transition font-semibold"
-        >
-          MUA VÉ NGAY
-        </button>
+          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition cursor-pointer"
+        />
+        <input
+          type="submit"
+          value="MUA VÉ NGAY"
+          onClick={() => navigate("/ticket")}
+          className="bg-red-600 text-white px-4 py-3 rounded hover:bg-red-700 transition font-semibold cursor-pointer"
+        />
       </div>
     </div>
   );

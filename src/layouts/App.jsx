@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import ShowDetail from "../pages/Home/show";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import TicketBooking from "../component/TicketBooking";
 
 // Import Dashboard và Layout
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -73,6 +74,16 @@ const App = () => {
             <>
               <Navbar />
               <Register />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/ticket"
+          element={
+            <>
+              <Navbar />
+              <TicketBooking />
               <Footer />
             </>
           }
