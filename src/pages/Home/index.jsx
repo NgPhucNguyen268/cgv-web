@@ -14,10 +14,10 @@ function Home() {
 
   return (
     <div className="max-w-full">
-      <div className="container mx-auto">
+      <div className="container mx-auto bg-[#FDF7E5]">
         <Navbar />
         <Banner />
-        <h1 className="text-white text-2xl text-center font-bold my-2">
+        <h1 className="text-black text-2xl text-center font-bold my-2 bg-[#FDF7E5]">
           PHIM ĐANG CHIẾU
         </h1>
         <MoviePoster movies={data || []} />

@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay } from "swiper/modules";
+import "swiper/css/effect-fade"; // Thêm hiệu ứng fade
+import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import hinh1 from "../../assets/hinh1.png";
 import hinh2 from "../../assets/hinh2.jpg";
 import hinh3 from "../../assets/hinh3.png";
@@ -12,10 +13,11 @@ import hinh7 from "../../assets/hinh7.jpg";
 
 const Banner = () => {
   return (
-    <div className="w-full max-w-7xl mx-auto px-4">
+    <div className="bg-[#FDF7E5] w-full max-w-screen-xl mx-auto px-4 mt-6">
       <Swiper
         navigation={true}
-        modules={[Navigation, Autoplay]}
+        effect="fade" // Thêm hiệu ứng fade
+        modules={[Navigation, Autoplay, EffectFade]}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
@@ -31,7 +33,7 @@ const Banner = () => {
               <img
                 src={hinh}
                 alt={`slide-${index}`}
-                className="object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
+                className="object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] max-h-screen"
               />
             </SwiperSlide>
           )
