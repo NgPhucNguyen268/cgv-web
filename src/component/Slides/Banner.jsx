@@ -12,29 +12,32 @@ import hinh7 from "../../assets/hinh7.jpg";
 
 const Banner = () => {
   return (
-    <Swiper
-      navigation={true}
-      modules={[Navigation, Autoplay]}
-      className="mySwiper"
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
-      loop={true}
-      slidesPerView={1}
-      spaceBetween={0}
-      style={{ height: "500px" }}
-    >
-      {[hinh1, hinh2, hinh3, hinh4, hinh5, hinh6, hinh7].map((hinh, index) => (
-        <SwiperSlide key={index}>
-          <img
-            src={hinh}
-            alt={`slide-${index}`}
-            className="object-cover w-full h-[500px]"
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="w-full max-w-7xl mx-auto px-4">
+      <Swiper
+        navigation={true}
+        modules={[Navigation, Autoplay]}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        slidesPerView={1}
+        spaceBetween={0}
+        className="rounded-lg overflow-hidden shadow-lg"
+      >
+        {[hinh1, hinh2, hinh3, hinh4, hinh5, hinh6, hinh7].map(
+          (hinh, index) => (
+            <SwiperSlide key={index}>
+              <img
+                src={hinh}
+                alt={`slide-${index}`}
+                className="object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
+              />
+            </SwiperSlide>
+          )
+        )}
+      </Swiper>
+    </div>
   );
 };
 

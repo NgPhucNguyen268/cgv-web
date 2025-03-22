@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SeatSelection from "./SeatSelection";
 
 const TicketBooking = () => {
   const [selectedDate, setSelectedDate] = useState("19");
   const [selectedCity, setSelectedCity] = useState("Hồ Chí Minh");
   const [selectedType, setSelectedType] = useState("2D Phụ Đề Việt");
   const [selectedShowtime, setSelectedShowtime] = useState(null);
+  const [selectedTheater, setSelectedTheater] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
 
   const dates = [
@@ -24,14 +27,25 @@ const TicketBooking = () => {
     {
       theater: "CGV Crescent Mall",
       times: ["13:50", "16:10", "18:30", "19:30", "22:15", "23:10"],
+      seats: generateSeats(10, 15),
     },
     {
       theater: "CGV Pandora City",
       times: ["18:40", "20:30", "22:00"],
+      seats: generateSeats(8, 12),
     },
   ];
 
-  // Lưu trạng thái đặt vé vào localStorage
+  function generateSeats(rows, cols) {
+    const rowLabels = "ABCDEFGHIJKLM".split("").slice(0, rows);
+    return rowLabels.map((row) =>
+      Array.from(
+        { length: cols },
+        (_, i) => `${row}${(i + 1).toString().padStart(2, "0")}`
+      )
+    );
+  }
+
   useEffect(() => {
     const savedData = JSON.parse(localStorage.getItem("bookingData"));
     if (savedData) {
@@ -39,6 +53,8 @@ const TicketBooking = () => {
       setSelectedCity(savedData.city);
       setSelectedType(savedData.type);
       setSelectedShowtime(savedData.showtime);
+      setSelectedTheater(savedData.theater);
+      setSelectedSeats(savedData.seats || []);
     }
   }, []);
 
@@ -48,8 +64,9 @@ const TicketBooking = () => {
       city: selectedCity,
       type: selectedType,
       showtime: selectedShowtime,
+      theater: selectedTheater,
+      seats: selectedSeats,
     };
-
     localStorage.setItem("bookingData", JSON.stringify(bookingData));
     navigate("/confirmation", { state: bookingData });
   };
@@ -87,7 +104,7 @@ const TicketBooking = () => {
         ))}
       </div>
 
-      {/* Chọn loại vé */}
+      {/* Chọn loại phim */}
       <div className="flex gap-2 mt-4">
         {movieTypes.map((type) => (
           <button
@@ -102,7 +119,7 @@ const TicketBooking = () => {
         ))}
       </div>
 
-      {/* Danh sách rạp và suất chiếu */}
+      {/* Chọn suất chiếu */}
       <div className="mt-6 bg-white p-4 rounded-md">
         {showtimes.map((theater) => (
           <div key={theater.theater} className="mb-4">
@@ -111,12 +128,15 @@ const TicketBooking = () => {
               {theater.times.map((time) => (
                 <button
                   key={time}
-                  className={`px-3 py-1 border rounded-md transition-transform transform hover:scale-110 ${
+                  className={`px-3 py-1 border rounded-md ${
                     selectedShowtime === time
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200"
                   }`}
-                  onClick={() => setSelectedShowtime(time)}
+                  onClick={() => {
+                    setSelectedShowtime(time);
+                    setSelectedTheater(theater.theater);
+                  }}
                 >
                   {time}
                 </button>
@@ -126,15 +146,22 @@ const TicketBooking = () => {
         ))}
       </div>
 
-      {/* Nút xác nhận đặt vé */}
-      {selectedShowtime && (
-        <button
-          className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 w-full"
-          onClick={handleBooking}
-        >
-          Xác nhận đặt vé
-        </button>
+      {/* Hiển thị sơ đồ ghế */}
+      {selectedTheater && (
+        <SeatSelection
+          selectedTheater={selectedTheater}
+          showtimes={showtimes}
+          onSeatSelect={setSelectedSeats}
+        />
       )}
+
+      {/* Xác nhận đặt vé */}
+      <button
+        className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 w-full"
+        onClick={handleBooking}
+      >
+        Xác nhận đặt vé
+      </button>
     </div>
   );
 };

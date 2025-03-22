@@ -1,51 +1,47 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 
-function Navbar() {
+const Navbar = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const isLoggedIn = false; // Sau này thay bằng dữ liệu từ backend
 
   return (
-    <div className="p-4 bg-black flex items-center justify-between relative">
-      {/* Logo + Menu */}
-      <div className="flex items-center space-x-4">
+    <header className="bg-[#FDF7E5] text-black shadow-md">
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
         <div
-          className="text-[40px] uppercase font-bold text-red-700 cursor-pointer"
+          className="text-3xl font-bold text-[#D47F19] cursor-pointer"
           onClick={() => navigate("/")}
         >
           CGV
         </div>
 
-        <nav className="flex items-center space-x-4">
-          {/* PHIM - Dropdown (Bọc toàn bộ phần tử) */}
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex space-x-6">
+          {/* PHIM - Dropdown */}
           <div
-            className="relative"
+            className="relative group"
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            {/* Nhãn menu */}
-            <span className="text-white hover:text-gray-400 cursor-pointer">
-              PHIM
-            </span>
-
-            {/* Dropdown menu */}
+            <span className="cursor-pointer hover:text-[#B38B59]">PHIM</span>
             {isDropdownOpen && (
-              <ul className="absolute left-0 mt-2 w-48 bg-black text-white rounded-md shadow-lg z-10">
+              <ul className="absolute left-0 mt-2 w-48 bg-[#F5E6C8] rounded-md shadow-lg z-10 text-black">
                 <li
-                  className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                  onClick={() => {
-                    navigate("/phim-dang-chieu");
-                    setIsDropdownOpen(false);
-                  }}
+                  className="px-4 py-2 hover:bg-[#B38B59] hover:text-white cursor-pointer"
+                  onClick={() => navigate("/phim-dang-chieu")}
                 >
                   Phim Đang Chiếu
                 </li>
                 <li
-                  className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                  onClick={() => {
-                    navigate("/phim-sap-chieu");
-                    setIsDropdownOpen(false);
-                  }}
+                  className="px-4 py-2 hover:bg-[#B38B59] hover:text-white cursor-pointer"
+                  onClick={() => navigate("/phim-sap-chieu")}
                 >
                   Phim Sắp Chiếu
                 </li>
@@ -53,41 +49,130 @@ function Navbar() {
             )}
           </div>
 
-          <a href="#" className="text-white hover:text-gray-400">
+          <a href="#" className="hover:text-[#B38B59]">
             RẠP CGV
           </a>
-          <a href="#" className="text-white hover:text-gray-400">
+          <a href="#" className="hover:text-[#B38B59]">
             THÀNH VIÊN
           </a>
-          <a href="#" className="text-white hover:text-gray-400">
+          <a href="#" className="hover:text-[#B38B59]">
             CULTUREPLEX
           </a>
         </nav>
+
+        {/* Nút đăng nhập / đăng ký / mua vé */}
+        <div className="hidden md:flex space-x-4">
+          <button
+            className="bg-[#E5C9A8] text-black px-4 py-2 rounded hover:bg-[#B38B59] hover:text-white transition"
+            onClick={() => navigate("/login")}
+          >
+            Đăng Nhập
+          </button>
+          <button
+            className="bg-[#E5C9A8] text-black px-4 py-2 rounded hover:bg-[#B38B59] hover:text-white transition"
+            onClick={() => navigate("/register")}
+          >
+            Đăng Ký
+          </button>
+          <button
+            className="bg-[#D47F19] px-6 py-3 rounded-lg text-lg font-semibold text-white hover:bg-[#B36A14] transition"
+            onClick={() => navigate("/ticket")}
+          >
+            MUA VÉ NGAY
+          </button>
+        </div>
+
+        {/* Mobile Controls */}
+        <div className="md:hidden flex items-center space-x-4">
+          {/* Icon User */}
+          <div className="relative">
+            <FaUserCircle
+              className="text-2xl cursor-pointer"
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+            />
+            {isUserMenuOpen && (
+              <ul className="absolute right-0 mt-2 w-40 bg-[#F5E6C8] rounded-md shadow-lg text-black text-sm">
+                {isLoggedIn ? (
+                  <>
+                    <li className="px-4 py-2">Xin chào, User</li>
+                    <li
+                      className="px-4 py-2 hover:bg-[#B38B59] hover:text-white cursor-pointer"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      Đăng xuất
+                    </li>
+                  </>
+                ) : (
+                  <li
+                    className="px-4 py-2 hover:bg-[#B38B59] hover:text-white cursor-pointer"
+                    onClick={() => navigate("/login")}
+                  >
+                    Đăng nhập
+                  </li>
+                )}
+              </ul>
+            )}
+          </div>
+
+          {/* Nút mở menu */}
+          <button
+            className="text-2xl"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </div>
 
-      {/* Nút đăng nhập, đăng ký, mua vé */}
-      <div className="flex items-center space-x-4">
-        <input
-          type="submit"
-          value="Đăng Nhập"
-          onClick={() => navigate("/login")}
-          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition cursor-pointer"
-        />
-        <input
-          type="submit"
-          value="Đăng Ký"
-          onClick={() => navigate("/register")}
-          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition cursor-pointer"
-        />
-        <input
-          type="submit"
-          value="MUA VÉ NGAY"
-          onClick={() => navigate("/ticket")}
-          className="bg-red-600 text-white px-4 py-3 rounded hover:bg-red-700 transition font-semibold cursor-pointer"
-        />
-      </div>
-    </div>
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <nav className="md:hidden bg-[#F5E6C8] text-center py-4">
+          {/* Dropdown PHIM cho mobile */}
+          <div>
+            <button
+              className="w-full text-left py-2 px-6 bg-[#E5C9A8] hover:bg-[#B38B59] hover:text-white flex justify-between items-center"
+              onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
+            >
+              PHIM
+              <span>{isMobileDropdownOpen ? "▲" : "▼"}</span>
+            </button>
+            {isMobileDropdownOpen && (
+              <ul className="bg-[#D4B89D]">
+                <li
+                  className="py-2 px-6 hover:bg-[#B38B59] hover:text-white cursor-pointer"
+                  onClick={() => navigate("/phim-dang-chieu")}
+                >
+                  Phim Đang Chiếu
+                </li>
+                <li
+                  className="py-2 px-6 hover:bg-[#B38B59] hover:text-white cursor-pointer"
+                  onClick={() => navigate("/phim-sap-chieu")}
+                >
+                  Phim Sắp Chiếu
+                </li>
+              </ul>
+            )}
+          </div>
+
+          <a href="#" className="block py-2 hover:text-[#B38B59]">
+            RẠP CGV
+          </a>
+          <a href="#" className="block py-2 hover:text-[#B38B59]">
+            THÀNH VIÊN
+          </a>
+          <a href="#" className="block py-2 hover:text-[#B38B59]">
+            CULTUREPLEX
+          </a>
+          <button
+            className="block w-full bg-[#D47F19] py-3 mt-4 text-lg font-semibold text-white hover:bg-[#B36A14] transition"
+            onClick={() => navigate("/ticket")}
+          >
+            MUA VÉ NGAY
+          </button>
+        </nav>
+      )}
+    </header>
   );
-}
+};
 
 export default Navbar;

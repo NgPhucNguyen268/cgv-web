@@ -3,20 +3,28 @@ import { Link } from "react-router-dom";
 import { PlayCircle } from "lucide-react"; // Import icon
 import YouTube from "react-youtube";
 
+const apiKey = import.meta.env.VITE_API_KEY;
+
 const MoviePoster = ({ movies }) => {
   const [trailer, setTrailer] = useState(null);
 
   const fetchTrailer = async (movieId) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=YOUR_API_KEY`
-    );
-    const data = await response.json();
-    const trailerVideo = data.results.find((vid) => vid.type === "Trailer");
-    setTrailer(trailerVideo ? trailerVideo.key : null);
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=vi-VN`
+      );
+      const data = await response.json();
+      const trailerVideo = data.results.find(
+        (vid) => vid.type === "Trailer" && vid.site === "YouTube"
+      );
+      setTrailer(trailerVideo ? trailerVideo.key : null);
+    } catch (error) {
+      console.error("Lỗi lấy trailer:", error);
+    }
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6 bg-[#FDF7E5]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {movies?.results.map((movie) => (
           <div
