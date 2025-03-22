@@ -18,51 +18,59 @@ const Confirmation = () => {
     );
   }
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 p-4">
-      <div className="max-w-lg w-full bg-white text-gray-800 rounded-lg shadow-xl p-6">
-        <h1 className="text-2xl font-bold text-center text-gray-900">
-          🎟 Xác Nhận Đặt Vé
-        </h1>
+  // Giá giả định cho mỗi vé (có thể thay đổi)
+  const ticketPrice = 90000; // 90.000 VND/vé
+  const totalPrice = state.seats.length * ticketPrice;
 
-        <div className="mt-4 space-y-3">
-          <p className="flex justify-between border-b pb-2">
-            <span className="font-semibold">📅 Ngày:</span> {state.date}
-          </p>
-          <p className="flex justify-between border-b pb-2">
-            <span className="font-semibold">📍 Thành phố:</span> {state.city}
-          </p>
-          <p className="flex justify-between border-b pb-2">
-            <span className="font-semibold">🎬 Loại vé:</span> {state.type}
-          </p>
-          <p className="flex justify-between border-b pb-2">
-            <span className="font-semibold">⏰ Suất chiếu:</span>{" "}
-            {state.showtime}
-          </p>
-          <p className="flex justify-between border-b pb-2">
-            <span className="font-semibold">🏢 Rạp:</span> {state.theater}
-          </p>
-          <div>
-            <span className="font-semibold">💺 Ghế đã chọn:</span>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {state.seats.length > 0 ? (
-                state.seats.map((seat, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-green-500 text-white text-sm font-semibold rounded-md shadow-sm"
-                  >
-                    {seat}
-                  </span>
-                ))
-              ) : (
-                <span className="text-gray-500">Chưa chọn ghế</span>
-              )}
-            </div>
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-[#FDF7E5]">
+      <div className="w-full max-w-md bg-white text-black rounded-lg shadow-lg p-6 relative">
+        {/* Tên phim */}
+        <div className="flex justify-between items-center border-b pb-3">
+          <h1 className="text-lg font-bold uppercase">
+            {state.movieName || "Tên phim không xác định"}
+          </h1>
+          <span className="bg-yellow-400 text-black px-2 py-1 text-sm font-semibold rounded">
+            {new Date().toLocaleTimeString()}
+          </span>
+        </div>
+
+        {/* Thông tin rạp */}
+        <div className="mt-3 text-sm">
+          <p className="font-semibold">{state.theater}</p>
+        </div>
+
+        {/* Thời gian */}
+        <div className="mt-3">
+          <p className="text-yellow-300 font-semibold">Thời gian</p>
+          <p className="text-lg">{state.showtime}</p>
+        </div>
+
+        {/* Thông tin vé */}
+        <div className="mt-3 text-sm">
+          <div className="flex justify-between border-b pb-2">
+            <span>Số vé</span> <span>{state.seats.length}</span>
+          </div>
+          <div className="flex justify-between border-b pb-2">
+            <span>Loại vé</span> <span>{state.type}</span>
           </div>
         </div>
 
+        {/* Ghế đã chọn */}
+        <div className="mt-3 text-sm">
+          <p className="text-yellow-300 font-semibold">Ghế đã chọn</p>
+          <p>{state.seats.join(", ")}</p>
+        </div>
+
+        {/* Tổng tiền */}
+        <div className="mt-4 border-t pt-3 flex justify-between text-lg font-bold">
+          <span>SỐ TIỀN CẦN THANH TOÁN</span>
+          <span>{totalPrice.toLocaleString()} VND</span>
+        </div>
+
+        {/* Nút hoàn tất */}
         <button
-          className="mt-6 w-full px-5 py-3 bg-green-500 text-white text-lg font-bold rounded-lg shadow-md hover:bg-green-600 transition-all"
+          className="mt-6 w-full px-5 py-3 bg-yellow-400 text-black text-lg font-bold rounded-lg shadow-md hover:bg-yellow-500 transition-all"
           onClick={() => navigate("/")}
         >
           ✅ Hoàn tất

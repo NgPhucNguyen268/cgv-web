@@ -13,7 +13,7 @@ import hinh7 from "../../assets/hinh7.jpg";
 
 const Banner = () => {
   return (
-    <div className="bg-[#FDF7E5] w-full max-w-screen-xl mx-auto px-4 mt-6">
+    <div className="w-4/5 mx-auto mt-6 px-4">
       <Swiper
         navigation={true}
         effect="fade" // Thêm hiệu ứng fade

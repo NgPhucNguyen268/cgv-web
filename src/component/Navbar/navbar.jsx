@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <header className="bg-[#FDF7E5] text-black shadow-md">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="w-4/5 mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div
           className="text-3xl font-bold text-[#D47F19] cursor-pointer"
@@ -32,7 +32,7 @@ const Navbar = () => {
           >
             <span className="cursor-pointer hover:text-[#B38B59]">PHIM</span>
             {isDropdownOpen && (
-              <ul className="absolute left-0 mt-2 w-48 bg-[#F5E6C8] rounded-md shadow-lg z-10 text-black">
+              <ul className="absolute left-0 mt-2 w-48 max-w-xs bg-[#F5E6C8] rounded-md shadow-lg z-10 text-black">
                 <li
                   className="px-4 py-2 hover:bg-[#B38B59] hover:text-white cursor-pointer"
                   onClick={() => navigate("/phim-dang-chieu")}
@@ -126,7 +126,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <nav className="md:hidden bg-[#F5E6C8] text-center py-4">
+        <nav className="md:hidden w-4/5 mx-auto bg-[#F5E6C8] text-center py-4">
           {/* Dropdown PHIM cho mobile */}
           <div>
             <button

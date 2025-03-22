@@ -24,7 +24,7 @@ const MoviePoster = ({ movies }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 bg-[#FDF7E5]">
+    <div className="w-4/5 mx-auto px-4 py-6 bg-[#FDF7E5]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {movies?.results.map((movie) => (
           <div
@@ -71,7 +71,7 @@ const MoviePoster = ({ movies }) => {
       {/* Modal Trailer */}
       {trailer && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-          <div className="relative w-full max-w-4xl p-4">
+          <div className="relative w-4/5 max-w-4xl p-4">
             <button
               className="absolute -top-6 -right-6 text-white text-3xl bg-red-600 rounded-full px-3 py-1 hover:bg-red-700"
               onClick={() => setTrailer(null)}
