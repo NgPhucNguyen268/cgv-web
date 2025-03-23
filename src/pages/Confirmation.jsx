@@ -23,54 +23,61 @@ const Confirmation = () => {
   const totalPrice = state.seats.length * ticketPrice;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#FDF7E5]">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white text-black rounded-lg shadow-lg p-6 relative">
-        {/* Tên phim */}
-        <div className="flex justify-between items-center border-b pb-3">
-          <h1 className="text-lg font-bold uppercase">
-            {state.movieName || "Tên phim không xác định"}
-          </h1>
-          <span className="bg-yellow-400 text-black px-2 py-1 text-sm font-semibold rounded">
-            {new Date().toLocaleTimeString()}
-          </span>
+        {/* Tiêu đề */}
+        <div className="flex items-center justify-center border-b pb-3 text-xl font-bold text-red-600">
+          <span className="mr-2">🎟️</span> Xác Nhận Đặt Vé
         </div>
 
-        {/* Thông tin rạp */}
-        <div className="mt-3 text-sm">
-          <p className="font-semibold">{state.theater}</p>
+        {/* Ngày */}
+        <div className="mt-3 flex justify-between text-sm border-b pb-2">
+          <span>📅 Ngày:</span>
+          <span>{state.date}</span>
         </div>
 
-        {/* Thời gian */}
-        <div className="mt-3">
-          <p className="text-yellow-300 font-semibold">Thời gian</p>
-          <p className="text-lg">{state.showtime}</p>
+        {/* Thành phố */}
+        <div className="mt-2 flex justify-between text-sm border-b pb-2">
+          <span>📍 Thành phố:</span>
+          <span>{state.city}</span>
         </div>
 
-        {/* Thông tin vé */}
-        <div className="mt-3 text-sm">
-          <div className="flex justify-between border-b pb-2">
-            <span>Số vé</span> <span>{state.seats.length}</span>
-          </div>
-          <div className="flex justify-between border-b pb-2">
-            <span>Loại vé</span> <span>{state.type}</span>
-          </div>
+        {/* Loại vé */}
+        <div className="mt-2 flex justify-between text-sm border-b pb-2">
+          <span>🎟️ Loại vé:</span>
+          <span>{state.type}</span>
+        </div>
+
+        {/* Suất chiếu */}
+        <div className="mt-2 flex justify-between text-sm border-b pb-2">
+          <span>⏰ Suất chiếu:</span>
+          <span>{state.showtime}</span>
+        </div>
+
+        {/* Rạp */}
+        <div className="mt-2 flex justify-between text-sm border-b pb-2">
+          <span>🏢 Rạp:</span>
+          <span>{state.theater}</span>
         </div>
 
         {/* Ghế đã chọn */}
-        <div className="mt-3 text-sm">
-          <p className="text-yellow-300 font-semibold">Ghế đã chọn</p>
-          <p>{state.seats.join(", ")}</p>
-        </div>
-
-        {/* Tổng tiền */}
-        <div className="mt-4 border-t pt-3 flex justify-between text-lg font-bold">
-          <span>SỐ TIỀN CẦN THANH TOÁN</span>
-          <span>{totalPrice.toLocaleString()} VND</span>
+        <div className="mt-2 text-sm border-b pb-2">
+          <span className="font-semibold">💺 Ghế đã chọn:</span>
+          <div className="mt-1 flex space-x-2">
+            {state.seats.map((seat, index) => (
+              <span
+                key={index}
+                className="bg-green-500 text-white px-3 py-1 rounded-lg"
+              >
+                {seat}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Nút hoàn tất */}
         <button
-          className="mt-6 w-full px-5 py-3 bg-yellow-400 text-black text-lg font-bold rounded-lg shadow-md hover:bg-yellow-500 transition-all"
+          className="mt-6 w-full px-5 py-3 bg-green-500 text-white text-lg font-bold rounded-lg shadow-md hover:bg-green-600 transition-all"
           onClick={() => navigate("/")}
         >
           ✅ Hoàn tất

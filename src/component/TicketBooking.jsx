@@ -40,18 +40,12 @@ const TicketBooking = () => {
     { id: "adultDouble", label: "NGƯỜI LỚN", type: "ĐÔI", price: 145000 },
   ];
 
-  const showtimes = [
-    {
-      theater: "CGV Crescent Mall",
-      times: ["13:50", "16:10", "18:30", "19:30", "22:15", "23:10"],
-      seats: generateSeats(10, 15),
-    },
-    {
-      theater: "CGV Pandora City",
-      times: ["18:40", "20:30", "22:00"],
-      seats: generateSeats(8, 12),
-    },
-  ];
+  const theaters = ["CGV Crescent Mall", "CGV Pandora City"];
+
+  const showtimes = {
+    "CGV Crescent Mall": ["13:50", "16:10", "18:30", "19:30", "22:15", "23:10"],
+    "CGV Pandora City": ["18:40", "20:30", "22:00"],
+  };
 
   function generateSeats(rows, cols) {
     const rowLabels = "ABCDEFGHIJKLM".split("").slice(0, rows);
