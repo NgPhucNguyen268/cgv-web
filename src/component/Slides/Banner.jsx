@@ -13,7 +13,7 @@ import hinh7 from "../../assets/hinh7.jpg";
 
 const Banner = () => {
   return (
-    <div className="w-4/5 mx-auto mt-6 px-4">
+    <div className="w-4/5 mx-auto mt-6 px-4 h-150px">
       <Swiper
         navigation={true}
         effect="fade" // Thêm hiệu ứng fade
@@ -33,7 +33,7 @@ const Banner = () => {
               <img
                 src={hinh}
                 alt={`slide-${index}`}
-                className="object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] max-h-screen"
+                className="object-cover w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px]"
               />
             </SwiperSlide>
           )
