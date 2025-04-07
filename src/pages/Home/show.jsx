@@ -1,39 +1,43 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import useFetch from "../../Utilities/Fetch";
+
 import { PlayCircle, Ticket } from "lucide-react";
 import TicketBooking from "../../component/TicketBooking";
+
+import { useGetChiTietPhimUS } from "../../api/homepage";
+import { imagePhim } from "../../Utilities/common";
 import { motion } from "framer-motion";
-
 const ShowDetail = () => {
-  const { id } = useParams();
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const { ma_phim } = useParams();
+  // const apiKey = import.meta.env.VITE_API_KEY;
 
-  const {
-    data: movie,
-    loading,
-    error,
-  } = useFetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=vi-VN`
-  );
+  // const {
+  //   data: movie,
+  //   loading,
+  //   error,
+  // } = useFetch(
+  //   `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=vi-VN`
+  // );
 
-  const { data: videos } = useFetch(
-    `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
-  );
+  // const { data: videos } = useFetch(
+  //   `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
+  // );
 
-  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+  // const [isTrailerOpen, setIsTrailerOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
-  if (loading) return <p className="text-center text-gray-400">Loading...</p>;
-  if (error)
-    return <p className="text-center text-red-500">Error: {error.message}</p>;
-  if (!movie)
-    return <p className="text-center text-gray-400">No data available.</p>;
+  // if (loading) return <p className="text-center text-gray-400">Loading...</p>;
+  // if (error)
+  //   return <p className="text-center text-red-500">Error: {error.message}</p>;
+  // if (!movie)
+  //   return <p className="text-center text-gray-400">No data available.</p>;
 
-  const trailer = videos?.results?.find(
-    (video) => video.type === "Trailer" && video.site === "YouTube"
-  );
+  // const trailer = videos?.results?.find(
+  //   (video) => video.type === "Trailer" && video.site === "YouTube"
+  // );
 
+  const { data: Phim } = useGetChiTietPhimUS(ma_phim);
+  if (!Phim) return <p>Không có dữ liệu phim.</p>;
   return (
     <div className="container mx-auto px-4 py-6 bg-[#FDF7E5]">
       <div className="max-w-6xl mx-auto mt-8 bg-white p-6 rounded-lg shadow-md">
@@ -45,30 +49,46 @@ const ShowDetail = () => {
           <div className="md:w-1/4 w-full flex justify-center">
             <img
               className="w-full md:w-[250px] h-auto rounded-md shadow-md"
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
+              src={`${imagePhim}${Phim.anh}`}
+              alt={Phim.ten_phim}
             />
           </div>
 
           <div className="md:w-3/4 w-full md:pl-6 mt-4 md:mt-0">
-            <h3 className="text-2xl font-bold">{movie.title}</h3>
+            <h3 className="text-2xl font-bold">{Phim.ten_phim}</h3>
             <p className="text-gray-600 text-sm mt-2">
-              <span className="font-bold">Đạo diễn:</span> Đang cập nhật
+              <span className="font-bold">Độ tuổi: </span>
+              {Phim.do_tuoi}
+            </p>
+            <p className="text-gray-600 text-sm mt-2">
+              <span className="font-bold">Hình thức chiếu: </span>
+              {Phim.hinh_thuc_chieu}
+            </p>
+            <p className="text-gray-600 text-sm mt-2">
+              <span className="font-bold">Đạo diễn: </span>
+              {Phim.dao_dien}
+            </p>
+            <p className="text-gray-600 text-sm mt-2">
+              <span className="font-bold">Diễn viên: </span>
+              {Phim.dien_vien}
             </p>
             <p className="text-gray-600 text-sm">
-              <span className="font-bold">Thể loại:</span> Đang cập nhật
+              <span className="font-bold">
+                Thể loại: {Phim.the_loai?.join(", ")}{" "}
+              </span>
             </p>
             <p className="text-gray-600 text-sm">
-              <span className="font-bold">Khởi chiếu:</span>{" "}
-              {movie.release_date}
+              <span className="font-bold">
+                Ngày phát hành:{" "}
+                {new Date(Phim.ngay_phat_hanh).toLocaleDateString("vi-VN")}
+              </span>{" "}
             </p>
             <p className="text-gray-600 text-sm">
-              <span className="font-bold">Thời lượng:</span> {movie.runtime}{" "}
+              <span className="font-bold">Thời lượng:</span> {Phim.thoi_luong}{" "}
               phút
             </p>
             <p className="text-gray-600 text-sm">
-              <span className="font-bold">Ngôn ngữ:</span>{" "}
-              {movie.original_language.toUpperCase()}
+              <span className="font-bold">Quốc gia: {Phim.quoc_gia}</span>{" "}
             </p>
 
             <div className="flex gap-2 mt-4">
@@ -79,14 +99,14 @@ const ShowDetail = () => {
                 <Ticket className="mr-2" size={18} /> MUA VÉ
               </button>
 
-              {trailer && (
+              {/* {trailer && (
                 <button
                   onClick={() => setIsTrailerOpen(true)}
                   className="bg-gray-800 text-white flex items-center px-4 py-2 rounded-md font-bold hover:bg-gray-900"
                 >
                   <PlayCircle className="mr-2" size={18} /> Trailer
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -99,7 +119,7 @@ const ShowDetail = () => {
           className="mt-6 p-4 bg-gray-100 rounded-md"
         >
           <h3 className="text-xl font-bold mb-2 text-gray-800">Mô tả phim</h3>
-          <p className="text-gray-700 leading-relaxed">{movie.overview}</p>
+          <p className="text-gray-700 leading-relaxed">{Phim.mo_ta}</p>
         </motion.div>
 
         <motion.div
@@ -114,7 +134,7 @@ const ShowDetail = () => {
           {isBookingOpen && <TicketBooking />}
         </motion.div>
 
-        {isTrailerOpen && trailer && (
+        {/* {isTrailerOpen && trailer && (
           <div className="fixed inset-0 bg-[rgba(0,0,0,0.3)] flex items-center justify-center z-50">
             <div className="bg-black p-4 rounded-lg relative max-w-3xl w-full">
               <button
@@ -131,7 +151,7 @@ const ShowDetail = () => {
               ></iframe>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

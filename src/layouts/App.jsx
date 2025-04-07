@@ -49,7 +49,7 @@ const App = () => {
           }
         />
         <Route
-          path="/movie/:id"
+          path="/phim/:ma_phim"
           element={
             <>
               <Navbar />

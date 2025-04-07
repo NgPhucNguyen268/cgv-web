@@ -2,44 +2,31 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PlayCircle } from "lucide-react"; // Import icon
 import YouTube from "react-youtube";
+import { imagePhim } from "../Utilities/common";
 
-const apiKey = import.meta.env.VITE_API_KEY;
+// const apiKey = import.meta.env.VITE_API_KEY;
 
-const MoviePoster = ({ movies }) => {
+const MoviePoster = ({ Phims }) => {
   const [trailer, setTrailer] = useState(null);
 
-  const fetchTrailer = async (movieId) => {
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=vi-VN`
-      );
-      const data = await response.json();
-      const trailerVideo = data.results.find(
-        (vid) => vid.type === "Trailer" && vid.site === "YouTube"
-      );
-      setTrailer(trailerVideo ? trailerVideo.key : null);
-    } catch (error) {
-      console.error("Lỗi lấy trailer:", error);
-    }
-  };
-
+  if (!Phims) return <p>Không có dữ liệu phim.</p>;
   return (
     <div className="w-4/5 mx-auto px-4 py-6 bg-[#FDF7E5]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {movies?.results.map((movie) => (
+        {Phims?.map((phim) => (
           <div
-            key={movie.id}
+            key={phim.ma_phim}
             className="flex flex-col group bg-gray-900 p-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
             {/* Poster + Play Button */}
             <div className="relative w-full h-full overflow-hidden rounded-lg cursor-pointer">
               <img
                 className="w-full h-full object-cover rounded-lg"
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                alt={movie.title}
+                src={`${imagePhim}${phim.anh}`}
+                alt={phim.title}
               />
               <button
-                onClick={() => fetchTrailer(movie.id)}
+                // onClick={() => fetchTrailer(movie.id)}
                 className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition"
               >
                 <PlayCircle size={50} className="text-white" />
@@ -48,17 +35,17 @@ const MoviePoster = ({ movies }) => {
 
             {/* Tiêu đề phim */}
             <p className="text-white text-center mt-3 font-bold text-lg">
-              {movie.title}
+              {phim.ten_phim}
             </p>
 
             {/* Nút Xem Chi Tiết + Mua Vé */}
             <div className="flex justify-center gap-2 mt-2">
-              <Link to={`/movie/${movie.id}`}>
+              <Link to={`/phim/${phim.ma_phim}`}>
                 <button className="flex items-center gap-1 bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition">
                   XEM CHI TIẾT
                 </button>
               </Link>
-              <Link to={`/ticket-booking/${movie.id}`}>
+              <Link to={`/ticket-booking/${phim.ma_phim}`}>
                 <button className="flex items-center gap-1 bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition">
                   MUA VÉ
                 </button>
