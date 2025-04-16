@@ -14,7 +14,7 @@ function Home() {
 
   return (
     <div className="max-w-full">
-      <div className="container mx-auto bg-[#FDF7E5]">
+      <div className=" mx-auto bg-[#FDF7E5]">
         <Navbar />
         <Banner />
         <h1 className="text-black text-2xl text-center font-bold my-2 bg-[#FDF7E5]">
